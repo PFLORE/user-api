@@ -21,6 +21,7 @@ Esta es una API RESTful desarrollada con Java 11 y Spring Boot que permite regis
 - Spring Data JPA
 - H2 Database
 - JWT (JJWT)
+- Lombok
 - Maven
 - Swagger (Springdoc OpenAPI)
 - JUnit 5 + Mockito
@@ -105,6 +106,32 @@ Puedes probar todos los endpoints usando Swagger UI:
 ---
 
 ## Pruebas
-Ejecutar pruebas con:
-```bash
-mvn test
+- **Ejecutar pruebas con:**
+   ```bash
+   mvn test
+---
+
+## Diagrama solución
+### Diagrama de Secuencia
+A continuación, se muestra el diagrama de secuencia del flujo de registro de usuario, que contempla tanto el caso exitoso como el caso de error si el correo ya existe:
+```text
+title Registro de Usuario - Flujo con Éxito y Error
+
+User->UserController: POST /api/users (con JSON de usuario)
+UserController->UserServiceImpl: register(user)
+UserServiceImpl->UserRepository: findByEmail(user.email)
+alt Usuario NO existe
+    UserRepository-->UserServiceImpl: Optional.empty
+    UserServiceImpl->UserServiceImpl: generar token JWT
+    UserServiceImpl->UserRepository: save(user)
+    UserRepository-->UserServiceImpl: User guardado
+    UserServiceImpl-->UserController: Usuario registrado
+    UserController-->User: Response 201 Created (user con token)
+else Usuario ya existe
+    UserRepository-->UserServiceImpl: Optional.of(user existente)
+    UserServiceImpl->UserServiceImpl: throw RuntimeException("El correo ya registrado")
+    UserServiceImpl-->UserController: Excepción
+    UserController-->User: Response 400 Bad Request (mensaje de error)
+end
+```
+👉 Puedes visualizar este diagrama copiando el bloque y pegándolo en la herramienta: https://sequencediagram.org

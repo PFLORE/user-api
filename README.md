@@ -45,9 +45,9 @@ Esta es una API RESTful desarrollada con Java 11 y Spring Boot que permite regis
     mvn clean install
     mvn spring-boot:run
 3. **Acceder a la API:**
-   - URL base: http://localhost:8080/api/users
+   - URL base: http://localhost:9090/api/users
 4. **Consola de base de datos H2 (opcional):**
-   - http://localhost:8080/h2-console
+   - http://localhost:9090/h2-console
    - JDBC URL: jdbc:h2:mem:userdb
    - Usuario: sa
    - Contraseña: (dejar en blanco)
@@ -100,7 +100,7 @@ Esta es una API RESTful desarrollada con Java 11 y Spring Boot que permite regis
 ## Documentación Swagger
 Puedes probar todos los endpoints usando Swagger UI:
 
-📄 http://localhost:8080/swagger-ui.html
+📄 http://localhost:9090/swagger-ui.html
 
 ---
 

@@ -3,6 +3,7 @@ package com.campany.service.impl;
 import com.campany.constant.GlobalConstant;
 import com.campany.dto.UserRequestDto;
 import com.campany.dto.UserResponseDto;
+import com.campany.exception.CustomException;
 import com.campany.mapper.UserMapper;
 import com.campany.model.User;
 import com.campany.properties.JwtProperties;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto register(UserRequestDto userRequestDto) {
         User user = userMapper.userRequestDtoToUser(userRequestDto);
         userRepository.findByEmail(user.getEmail()).ifPresent(response -> {
-            throw new RuntimeException(GlobalConstant.VALIDATE_EXIST_EMAIL);
+            throw new CustomException(GlobalConstant.VALIDATE_EXIST_EMAIL);
         });
 
         LocalDateTime now = LocalDateTime.now();
